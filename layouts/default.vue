@@ -5,7 +5,7 @@
         <label tabindex="0" class="btn btn-ghost btn-circle">
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            class="h-5 w-5"
+            class="w-5 h-5"
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
@@ -20,16 +20,7 @@
         </label>
         <ul
           tabindex="0"
-          class="
-            menu menu-compact
-            dropdown-content
-            mt-3
-            p-2
-            shadow
-            bg-base-100
-            rounded-box
-            w-52
-          "
+          class="p-2 mt-3 shadow menu menu-compact dropdown-content bg-base-100 rounded-box w-52"
         >
           <li v-for="r in routes">
             <NuxtLink :to="r.to">{{ r.name }}</NuxtLink>
@@ -38,13 +29,13 @@
       </div>
     </div>
     <div class="navbar-center">
-      <a class="btn btn-ghost normal-case text-xl">{{ navTitle }}</a>
+      <a class="text-xl normal-case btn btn-ghost">{{ navTitle }}</a>
     </div>
     <div class="navbar-end">
       <button class="btn btn-ghost btn-circle">
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          class="h-5 w-5"
+          class="w-5 h-5"
           fill="none"
           viewBox="0 0 24 24"
           stroke="currentColor"
@@ -61,7 +52,7 @@
         <div class="indicator">
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            class="h-5 w-5"
+            class="w-5 h-5"
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
@@ -88,6 +79,7 @@ const route = useRoute();
 const routes = [
   { name: 'Home', to: '/' },
   { name: 'Find Games', to: '/search' },
+  { name: 'Profile', to: '/account' },
   { name: 'About', to: '/about' },
 ];
 const navTitle = computed(() => {
