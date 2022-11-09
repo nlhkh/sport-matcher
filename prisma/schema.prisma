@@ -10,36 +10,60 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Players {
-  id            String         @id
+enum GameType {
+  BADMINTON
+  FOOTBALL
+  BASKETBALL
+  FLOORBALL
+  TENNIS
+  SQUASH
+  PADEL
+  VOLLEYBALL
+}
+
+model Player {
+  id            String        @id
   name          String
   email         String
   phoneNumber   String?
-  managedGroups Groups[]
-  participants  Participants[]
+  managedGroups Group[]
+  participants  Participant[]
+  memberships   Membership[]
 }
 
-model Groups {
-  id      Int     @id @default(autoincrement())
-  name    String
-  admin   Players @relation(fields: [adminId], references: [id])
-  adminId String
+model Group {
+  id          Int          @id @default(autoincrement())
+  name        String
+  admin       Player       @relation(fields: [adminId], references: [id])
+  adminId     String
+  gameType    GameType
+  memberships Membership[]
 }
 
-model Games {
-  id           Int            @id @default(autoincrement())
-  date         DateTime       @default(now())
+model Membership {
+  player   Player @relation(fields: [playerId], references: [id])
+  group    Group  @relation(fields: [groupId], references: [id])
+  playerId String
+  groupId  Int
+
+  @@id([playerId, groupId])
+}
+
+model Game {
+  id           Int           @id @default(autoincrement())
+  date         DateTime      @default(now())
   address      String
   capacity     Int
-  totalPrice   Float          @default(0.0)
-  participants Participants[]
+  totalPrice   Float         @default(0.0)
+  participants Participant[]
 }
 
-model Participants {
-  player    Players @relation(fields: [playersId], references: [id])
-  game      Games   @relation(fields: [gamesId], references: [id])
-  playersId String
-  gamesId   Int
+model Participant {
+  player   Player   @relation(fields: [playerId], references: [id])
+  game     Game     @relation(fields: [gameId], references: [id])
+  playerId String
+  gameId   Int
+  date     DateTime @default(now())
 
-  @@id([playersId, gamesId])
+  @@id([playerId, gameId])
 }
