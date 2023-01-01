@@ -75,16 +75,17 @@
   </template>
   
   <script lang="ts" setup>
-  const route = useRoute();
+  const route = useRoute()
   const routes = [
     { name: 'Home', to: '/' },
-    { name: "Calendar", to: "/calendar"},
+    { name: "Calendar", to: "/calendar/going"},
     { name: 'Explore', to: '/explore' },
     { name: 'Notifications', to: '/notifications' },
     { name: 'Messages', to: "/messages" },
-  ];
+  ]
+
   const navTitle = computed(() => {
-    return routes.find((r) => r.to === route.path)?.name;
-  });
+    return routes.find((r) => r.to === route.path)?.name
+  })
   </script>
   
