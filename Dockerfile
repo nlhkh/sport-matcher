@@ -14,4 +14,6 @@ FROM node:18-alpine
 WORKDIR /app
 COPY --from=builder /stage/.output /app/
 
+USER daemon
+
 CMD [ "node", "server/index.mjs" ]
