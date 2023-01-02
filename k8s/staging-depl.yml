@@ -1,0 +1,63 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nuxt-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nuxt
+  template:
+    metadata:
+      labels:
+        app: nuxt
+    spec:
+      containers:
+        - name: nuxt
+          image: ghcr.io/floatingpoints/sport-matcher:main
+          resources:
+            requests:
+              memory: '128Mi'
+              cpu: '0.25'
+            limits:
+              memory: '256Mi'
+              cpu: '0.5'
+      imagePullPolicy: Always
+      imagePullSecrets:
+        - name: regcred
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nuxt-srv
+spec:
+  selector:
+    app: nuxt-xyz
+  ports:
+    - name: nuxt-xyz
+      protocol: TCP
+      port: 3000
+      targetPort: 3000
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: nuxt-ingress
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-cluster-issuer
+spec:
+  tls:
+    - hosts:
+        - staging.time4.games
+      secretName: nuxt-cert-tls
+  rules:
+    - host: staging.time4.games
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: nuxt-srv
+                port:
+                  number: 3000
