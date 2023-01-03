@@ -3,6 +3,7 @@ FROM node:18 AS builder
 WORKDIR /stage
 
 COPY package.json .
+COPY yarn.lock .
 RUN yarn
 
 COPY . .
