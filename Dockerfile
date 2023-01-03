@@ -3,12 +3,12 @@ FROM node:18 AS builder
 WORKDIR /stage
 
 COPY package.json .
-COPY yarn.lock .
-RUN yarn
+COPY package-lock.json .
+RUN npm ci
 
 COPY . .
-RUN yarn build
-RUN yarn postinstall
+RUN npm run build
+RUN npm run postinstall
 
 FROM node:18-alpine
 
