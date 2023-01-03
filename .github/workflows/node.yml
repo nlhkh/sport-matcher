@@ -5,14 +5,14 @@ name: Node CI
 
 on:
   push:
-    branches: ['main']
+    branches: ['*']
     tags: [v*]
   pull_request:
     branches: [main]
 
 jobs:
   build:
-    if: github.event_name != 'pull_request' && (github.ref_name == 'main' || startsWith(github.ref_name, 'v'))
+    # if: github.event_name != 'pull_request' && (github.ref_name == 'main' || startsWith(github.ref_name, 'v'))
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -50,6 +50,17 @@ jobs:
           platforms: linux/arm64,linux/amd64
           push: true
           tags: ghcr.io/${{github.repository}}:${{github.ref_name}},ghcr.io/${{github.repository}}:latest
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      - name: Build actor featue branch
+        if: github.ref_name != 'main' && !startsWith(github.ref_name, 'v')
+        uses: docker/build-push-action@v3
+        with:
+          context: .
+          platforms: linux/arm64,linux/amd64
+          push: true
+          tags: ghcr.io/${{github.repository}}:${{github.actor}}
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
