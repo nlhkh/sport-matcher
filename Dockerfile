@@ -1,4 +1,4 @@
-FROM node:18 AS builder
+FROM node:19 AS builder
 
 WORKDIR /stage
 
@@ -10,7 +10,7 @@ COPY . .
 RUN npm run build
 RUN npm run postinstall
 
-FROM node:18-alpine
+FROM node:19-alpine
 
 WORKDIR /app
 COPY --from=builder /stage/.output /app/
