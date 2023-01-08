@@ -31,6 +31,11 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
+      - uses: gacts/github-slug@v1
+        id: slug
+        with:
+          to-slug: ${{ github.actor }}
+
       - name: Build staging
         if: github.ref_name == 'main'
         uses: docker/build-push-action@v3
@@ -60,7 +65,7 @@ jobs:
           context: .
           platforms: linux/arm64,linux/amd64
           push: true
-          tags: ghcr.io/${{github.repository}}:${{github.actor}}
+          tags: ghcr.io/${{github.repository}}:${{steps.slug.outputs.slug}}
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
