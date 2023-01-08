@@ -32,9 +32,9 @@ metadata:
   name: nuxt-srv
 spec:
   selector:
-    app: nuxt-xyz
+    app: nuxt
   ports:
-    - name: nuxt-xyz
+    - name: nuxt
       protocol: TCP
       port: 3000
       targetPort: 3000
