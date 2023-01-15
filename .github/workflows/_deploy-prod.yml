@@ -1,0 +1,32 @@
+name: Deploy to Staging
+
+on:
+  workflow_call:
+
+jobs:
+  prod:
+    runs-on: self-hosted
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v3
+
+      - name: Install kubectl
+        uses: azure/setup-kubectl@v3
+        id: install-kubectl
+
+      - name: Set the Kubernetes context
+        uses: azure/k8s-set-context@v3
+        with:
+          method: kubeconfig
+          kubeconfig: ${{secrets.KUBE_CONFIG_PROD}}
+
+      - name: Deploy to the Kubernetes cluster
+        uses: azure/k8s-deploy@v4
+        with:
+          namespace: time4games-prod
+          manifests: |
+            k8s/prod-depl.yml
+          strategy: basic
+          images: |
+            ghcr.io/${{github.repository}}:${{github.ref_name}}
+          annotate-namespace: false
