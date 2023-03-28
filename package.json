@@ -12,5 +12,8 @@
     "daisyui": "^2.46.0",
     "nuxt": "3.3.2",
     "postcss-custom-properties": "^13.0.0"
+  },
+  "dependencies": {
+    "@directus/sdk": "^10.3.3"
   }
 }
