@@ -8,12 +8,13 @@
     "postinstall": "nuxt prepare"
   },
   "devDependencies": {
+    "@nuxtjs/apollo": "^5.0.0-alpha.6",
     "@nuxtjs/tailwindcss": "^6.2.0",
     "daisyui": "^2.46.0",
     "nuxt": "3.3.2",
     "postcss-custom-properties": "^13.0.0"
   },
   "dependencies": {
-    "@directus/sdk": "^10.3.3"
+    "nuxt-directus": "^5.1.1"
   }
 }

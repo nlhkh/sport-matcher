@@ -1,37 +1,41 @@
 <template>
     <div class="flex flex-col gap-3 mx-5 mb-3">
         <div class="flex flex-col gap-2">
-            <div class="font-bold">My groups</div>
-            <div class="grid grid-cols-2 gap-2">
-                <div v-for="group in groups" :key="group.id" class="shadow-xl card bg-base-content">
-                    <figure><img :src="group.image" :alt="group.name" /></figure>
+            <div class="font-bold">My Clubs</div>
+            <div class="grid grid-cols-2 gap-2" v-if="data !== null">
+                <div v-for="club in data.clubs" :key="club.id" class="shadow-xl card bg-base-content">
+                    <figure><img :src="getThumbnail(club.cover.id, {width: 180, format: 'webp'})" :alt="club.name" /></figure>
                     <div class="-m-4 card-body">
                         <NuxtLink>
-                            <h2 class="card-title text-primary">{{ group.name }}</h2>
+                            <h2 class="card-title text-primary">{{ club.name }}</h2>
                         </NuxtLink>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="flex">
-            <a class="flex-1 btn btn-primary">Start a new group</a>
-        </div>
     </div>
 </template>
 
 <script lang="ts" setup>
+definePageMeta({
+    middleware: ["auth"]
+})
 
+const query = gql`
+    query {
+        clubs {
+            id
+            name
+            activity
+            cover {
+                id
+            }
+        }
+    }
+`
 
-const groups: Group[] = [
-    { id: 1, name: "Smash Sulkis", image: "https://freesvg.org/img/logo_bad_lion_2.png" },
-    { id: 2, name: "Smash Sulkis", image: "https://freesvg.org/img/logo_bad_lion_2.png" },
-    { id: 3, name: "Smash Sulkis", image: "https://freesvg.org/img/logo_bad_lion_2.png" },
-    { id: 4, name: "Smash Sulkis", image: "https://freesvg.org/img/logo_bad_lion_2.png" },
-    { id: 5, name: "Smash Sulkis", image: "https://freesvg.org/img/logo_bad_lion_2.png" },
-    { id: 6, name: "Smash Sulkis", image: "https://freesvg.org/img/logo_bad_lion_2.png" },
-    { id: 7, name: "Smash Sulkis", image: "https://freesvg.org/img/logo_bad_lion_2.png" },
-    { id: 8, name: "Smash Sulkis", image: "https://freesvg.org/img/logo_bad_lion_2.png" },
-    { id: 9, name: "Smash Sulkis", image: "https://freesvg.org/img/logo_bad_lion_2.png" },
-    { id: 10, name: "Smash Sulkis", image: "https://freesvg.org/img/logo_bad_lion_2.png" },
-]
+const { data } = await useAsyncQuery<{clubs: Club[]}>(query)
+
+const { getThumbnail } = useDirectusFiles()
+const { token } = useDirectusToken()
 </script>

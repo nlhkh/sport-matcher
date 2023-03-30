@@ -78,10 +78,7 @@
   const route = useRoute()
   const routes = [
     { name: 'Home', to: '/' },
-    { name: "Calendar", to: "/calendar/going"},
-    { name: 'Explore', to: '/explore' },
-    { name: 'Notifications', to: '/notifications' },
-    { name: 'Messages', to: "/messages" },
+    { name: "About", to: "/about"},
   ]
 
   const navTitle = computed(() => {

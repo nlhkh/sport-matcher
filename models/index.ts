@@ -1,13 +1,16 @@
-interface Group {
+interface Club {
     id: number,
     name: string,
-    image: string,
+    activity: string,
+    cover: {
+        id: string,
+    },
 }
 
-interface GroupEvent {
+interface Game {
     id: number,
-    groupId: number,
-    groupName: string,
+    club: number,
+    name: string,
     time: Date,
     location: string,
     going: number,
