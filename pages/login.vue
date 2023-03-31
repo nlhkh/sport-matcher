@@ -16,18 +16,12 @@
 </template>
 
 <script lang="ts" setup>
-const { login } = useDirectusAuth()
-const { onLogin } = useApollo()
-
 const authInput = reactive({
     email: "", password: ""
 })
 
 async function submit() {
-    const auth = await login(authInput)
-    if (auth.access_token) {
-        onLogin(auth.access_token)
-        return navigateTo("/")
-    }
+    await login(authInput.email, authInput.password)
+    return navigateTo("/")
 }
 </script>

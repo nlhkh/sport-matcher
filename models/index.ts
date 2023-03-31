@@ -2,9 +2,7 @@ interface Club {
     id: number,
     name: string,
     activity: string,
-    cover: {
-        id: string,
-    },
+    cover: string,
 }
 
 interface Game {

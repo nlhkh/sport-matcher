@@ -2,9 +2,9 @@
     <div class="flex flex-col gap-3 mx-5 mb-3">
         <div class="flex flex-col gap-2">
             <div class="font-bold">My Clubs</div>
-            <div class="grid grid-cols-2 gap-2" v-if="data !== null">
-                <div v-for="club in data.clubs" :key="club.id" class="shadow-xl card bg-base-content">
-                    <figure><img :src="getThumbnail(club.cover.id, {width: 180, format: 'webp'})" :alt="club.name" /></figure>
+                <div class="grid grid-cols-2 gap-2" v-if="data !== null">
+                <div v-for="club in data.data" :key="club.id" class="shadow-xl card bg-base-content">
+                    <figure><img :src="getThumbnail(club.cover, {fit: 'cover', width: 180, format: 'webp'})" :alt="club.name" /></figure>
                     <div class="-m-4 card-body">
                         <NuxtLink>
                             <h2 class="card-title text-primary">{{ club.name }}</h2>
@@ -18,24 +18,8 @@
 
 <script lang="ts" setup>
 definePageMeta({
-    middleware: ["auth"]
+    middleware: [ "auth" ]
 })
 
-const query = gql`
-    query {
-        clubs {
-            id
-            name
-            activity
-            cover {
-                id
-            }
-        }
-    }
-`
-
-const { data } = await useAsyncQuery<{clubs: Club[]}>(query)
-
-const { getThumbnail } = useDirectusFiles()
-const { token } = useDirectusToken()
+const { data } = useClubs()
 </script>
