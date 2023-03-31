@@ -78,6 +78,7 @@
   const route = useRoute()
   const routes = [
     { name: 'Home', to: '/' },
+    { name: 'Profile', to: '/profile' },
     { name: "About", to: "/about"},
   ]
 

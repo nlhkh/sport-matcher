@@ -1,6 +1,8 @@
 export function useClubs() {
-    return useFetch<{ data: Club[] }>("/items/clubs", {
+    return useFetch< Club[]>("/items/clubs", {
         baseURL: baseURL(),
-        onRequest: onDirectusRequest
+        onRequest: onDirectusRequest,
+        transform: (input: any) => input.data,
+        retry: 2,
     })
 }

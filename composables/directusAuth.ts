@@ -1,6 +1,7 @@
 import { CookieRef } from "nuxt/app"
 
 type DirectusToken = { accessToken: string, refreshToken: string, expire: number }
+
 type DirectusAuth = {
     data: {
         access_token: string
@@ -8,6 +9,8 @@ type DirectusAuth = {
         expires: number
     }
 }
+
+type UserInfo = {id: string, firstName: string, lastName: string, email: string, description: string, avatar: string}
 
 export function baseURL() {
     return useRuntimeConfig().public.apiBase
@@ -70,9 +73,18 @@ export async function onDirectusRequest(arg: { options: any }) {
     arg.options.headers.authorization = `Bearer ${token}`
 }
 
+
 export function useUserInfo() {
-    return useFetch("/me", {
+    return useFetch<UserInfo>("users/me", {
         baseURL: baseURL(),
-        onRequest: onDirectusRequest
+        onRequest: onDirectusRequest,
+        transform: (input: any) => ({
+            id: input.data.id,
+            firstName: input.data.first_name,
+            lastName: input.data.last_name,
+            email: input.data.email,
+            description: input.data.description,
+            avatar: input.data.avatar
+        })
     })
 }
