@@ -3,6 +3,8 @@ interface Club {
     name: string,
     activity: string,
     cover: string,
+    createdDate: Date,
+    members: number[]
 }
 
 interface Game {
