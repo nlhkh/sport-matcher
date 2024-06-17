@@ -21,7 +21,7 @@ jobs:
           kubeconfig: ${{secrets.KUBE_CONFIG_PROD}}
 
       - name: Deploy to the Kubernetes cluster
-        uses: azure/k8s-deploy@v4
+        uses: azure/k8s-deploy@v5
         with:
           namespace: time4games-prod
           manifests: |
